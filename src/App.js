@@ -9,7 +9,6 @@ function App() {
     <Router>
       <div>
         <Header />
-
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/topics" component={Topics} />
@@ -19,17 +18,32 @@ function App() {
 }
 
 function Home() {
-  ReactGA.pageview("/");
+  ReactGA.timing({
+    category: "API Calls",
+    variable: "load",
+    value: 128,
+    label: "quick"
+  });
   return <h2>Home</h2>;
 }
 
 function About() {
-  ReactGA.pageview("/about");
+  ReactGA.timing({
+    category: "API Calls",
+    variable: "load",
+    value: 256,
+    label: "fast"
+  });
   return <h2>About</h2>;
 }
 
 function Topic({ match }) {
-  ReactGA.pageview(`/topics/${match.params.id}`);
+  ReactGA.timing({
+    category: "API Calls",
+    variable: "load",
+    value: 512,
+    label: "okay"
+  });
   return <h3>Requested Param: {match.params.id}</h3>;
 }
 
@@ -52,7 +66,12 @@ function Topics({ match }) {
         exact
         path={match.path}
         render={() => {
-          ReactGA.pageview("/topics");
+          ReactGA.timing({
+            category: "API Calls",
+            variable: "load",
+            value: 1024,
+            label: "slow"
+          });
           return <h3>Please select a topic.</h3>;
         }}
       />
